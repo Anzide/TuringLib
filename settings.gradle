@@ -1,0 +1,6 @@
+rootProject.name = 'TuringLib'
+sourceControl {
+    gitRepository("D:/IDEAProjects/TuringProject/Turing") {
+        producesModule("net.geekmc.turing:Turing")
+    }
+}
