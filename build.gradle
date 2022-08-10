@@ -65,7 +65,6 @@ dependencies {
     compileOnly 'net.geekmc.turing:Turing:1.0.8'
 //    implementation 'com.github.Sword-Fire:Turing:1.0.8'
 
-
     // source dependency
     // 本项目build.gradle & 本项目settings.gralde & 依赖项目build.gradle 的 group 必须相同
     // artifact名也必须相同 取决于依赖项的setting.gradle
