@@ -14,7 +14,7 @@ shadowJar {
     mergeServiceFiles()
 }
 
-group 'net.geekmc'
+group 'net.geekmc.turinglib'
 version '1.0-SNAPSHOT'
 
 repositories {
