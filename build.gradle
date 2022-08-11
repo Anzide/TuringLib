@@ -28,6 +28,10 @@ repositories {
 
 dependencies {
 
+    //Turing
+    compileOnly 'net.geekmc.turing:Turing:1.0.0'
+//    implementation 'com.github.Sword-Fire:Turing:1.0.8'
+
     // Minestom
     compileOnly('com.github.Minestom:Minestom:7af3e1c2e2') {
         exclude group: 'org.tinylog'
@@ -60,10 +64,6 @@ dependencies {
     // KStom
     // https://github.com/Project-Cepi/KStom
     compileOnly 'com.github.Project-Cepi:KStom:67be3adc9d'
-
-    //Turing
-    compileOnly 'net.geekmc.turing:Turing:1.0.8'
-//    implementation 'com.github.Sword-Fire:Turing:1.0.8'
 
     // source dependency
     // 本项目build.gradle & 本项目settings.gralde & 依赖项目build.gradle 的 group 必须相同
