@@ -5,20 +5,34 @@ import net.minestom.server.instance.Instance
 import net.minestom.server.instance.InstanceManager
 import net.minestom.server.instance.block.Block
 import net.minestom.server.instance.generator.GenerationUnit
+import net.minestom.server.utils.NamespaceID
+import net.minestom.server.world.DimensionType
+import world.cepi.kstom.Manager
 import java.util.HashMap
 
 object InstanceService {
-    private lateinit var instanceManager: InstanceManager
+    private lateinit var manager: InstanceManager
+    private lateinit var fullBrightDimension: DimensionType
+
+    // Instance inner ID -> Instance
     private val map: MutableMap<String, Instance> = HashMap()
     const val MAIN_INSTANCE = "world2"
 
     fun initialize() {
-        instanceManager = MinecraftServer.getInstanceManager()
+        manager = MinecraftServer.getInstanceManager()
+        fullBrightDimension = DimensionType.builder(NamespaceID.from("full_bright_dimension"))
+            .ambientLight(2f)
+            .build()
+        Manager.dimensionType.addDimension(fullBrightDimension)
     }
 
     fun createInstanceContainer(name: String): Boolean {
-        if (map.containsKey(name)) return false
-        val instance = instanceManager.createInstanceContainer()
+
+        if (map.containsKey(name)) {
+            throw IllegalArgumentException("Could not create instance named $name because it already exists!")
+        }
+
+        val instance = manager.createInstanceContainer(fullBrightDimension)
         instance.setGenerator { unit: GenerationUnit ->
             unit.modifier().fillHeight(0, 40, Block.GRASS_BLOCK)
         }
