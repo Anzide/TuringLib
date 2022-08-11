@@ -1,2 +1,2 @@
-# Minotaur
-Minotaur is a Minestom extensino,which allows to create custom entity,skill and item.
+# TuringLib
+TuringLib is a library for Minestom,it offers convenient tools to use.
