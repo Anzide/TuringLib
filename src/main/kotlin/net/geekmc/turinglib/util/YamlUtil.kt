@@ -1,4 +1,5 @@
 package net.geekmc.turinglib.util
 
-class YamlUtil {
+fun <K, V> Map<K, V>.extract(key: String): Any? {
+    return null
 }
