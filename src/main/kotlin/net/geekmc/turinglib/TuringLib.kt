@@ -7,20 +7,25 @@ import net.geekmc.turinglib.util.saveResource
 import net.minestom.server.extensions.Extension
 import org.yaml.snakeyaml.Yaml
 
-object TuringLib : Extension() {
+class TuringLib : Extension() {
+
+    companion object {
+        lateinit var INSTANCE: TuringLib
+            private set
+    }
 
     override fun initialize() {
+        INSTANCE = this
 
         saveResource("CustomColors.yml")
-        val yaml = Yaml()
 
-        var taml = yaml.loadAsTaml(getResource("CustomColors.yml")!!)
-        val x: Int? = taml["1"]
-        println(x)
-        println(taml["2.3"])
-        println(taml["test"])
-        println(taml["colors"])
-
+//        val yaml = Yaml()
+//        val taml = yaml.loadAsTaml(getResource("CustomColors.yml")!!)
+//        val importantStr: String = taml["2.3"]!!
+//        val customColors: List<String> = taml["colors", listOf()]
+//
+//        println(importantStr)
+//        println(customColors)
 
         ColorUtil.enable()
         logger.info("TuringLib initialized.")

@@ -3,32 +3,36 @@ package net.geekmc.turinglib.taml
 import org.yaml.snakeyaml.Yaml
 import java.io.InputStream
 
-fun Yaml.loadAsTaml(yaml: InputStream): Taml {
-    return Taml(yaml)
+
+fun Yaml.loadAsTaml(io: InputStream): Taml {
+    return Taml(io, this)
 }
 
-// 包装类，里面包了一个Map，
-// 可以使用["a.b.c"]提取值
+/**
+ * 两种方式创建Taml对象：
+ * Yaml.loadAsTaml，会使用提供的Yaml的格式来创建
+ * Taml()，会使用默认的格式来创建
+ */
 class Taml {
 
     companion object {
 
-        private val yaml: Yaml
+        private val defaultYaml: Yaml
 
         init {
 //            val options = DumperOptions()
 //            options.defaultFlowStyle = DumperOptions.FlowStyle.BLOCK
-            yaml = Yaml()
+            defaultYaml = Yaml()
         }
     }
 
     private val rootMap: Map<Any?, Any?>
 
-    constructor(io: InputStream) {
+    constructor(io: InputStream, yaml: Yaml = defaultYaml) {
         rootMap = yaml.load(io)
     }
 
-    constructor(str: String) {
+    constructor(str: String, yaml: Yaml = defaultYaml) {
         rootMap = yaml.load(str)
     }
 
@@ -54,13 +58,19 @@ class Taml {
                 }
             }
             if (!iter.hasNext()) {
+                @Suppress("UNCHECKED_CAST")
                 return obj[key] as? T ?: let { return null }
             } else {
+                @Suppress("UNCHECKED_CAST")
                 obj = obj[key] as? Map<Any?, Any?> ?: let { return null }
             }
 
         }
         return null
+    }
+
+    operator fun <T> get(keyString: String, default: T): T {
+        return get(keyString) ?: default
     }
 
 }
