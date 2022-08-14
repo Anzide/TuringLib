@@ -8,11 +8,11 @@ import net.kyori.adventure.text.minimessage.MiniMessage
 fun String.toComponent(): Component {
     var str = this
     // 防止&&被替换
-    str.replace("&&", "{§}")
+    str = str.replace("&&", "{§}")
     for ((k, v) in ColorUtil.colorMap) {
         str = str.replace(k, v)
     }
-    str.replace("{§}", "&")
+    str = str.replace("{§}", "&")
     return ColorUtil.miniMessage.deserialize(str)
 }
 
