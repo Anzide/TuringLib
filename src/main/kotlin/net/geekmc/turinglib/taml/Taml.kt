@@ -1,39 +1,37 @@
 package net.geekmc.turinglib.taml
 
+import org.yaml.snakeyaml.DumperOptions
 import org.yaml.snakeyaml.Yaml
-import java.io.InputStream
+import java.io.FileReader
+import java.io.FileWriter
+import java.nio.file.Path
+import kotlin.io.path.absolutePathString
 
-
-fun Yaml.loadAsTaml(io: InputStream): Taml {
-    return Taml(io, this)
-}
+// TODO appendList()方法，方便地往列表里添加东西！
 
 /**
  * 两种方式创建Taml对象：
  * Yaml.loadAsTaml，会使用提供的Yaml的格式来创建
  * Taml()，会使用默认的格式来创建
  */
-class Taml {
+class Taml(val path: Path, val yaml: Yaml = defaultYaml) {
 
     companion object {
 
         private val defaultYaml: Yaml
 
         init {
-//            val options = DumperOptions()
-//            options.defaultFlowStyle = DumperOptions.FlowStyle.BLOCK
+            // 默认的保存风格
+            val options = DumperOptions()
+            options.defaultFlowStyle = DumperOptions.FlowStyle.BLOCK
             defaultYaml = Yaml()
         }
     }
 
-    private val rootMap: Map<Any?, Any?>
+    private val rootMap: MutableMap<Any?, Any?>
 
-    constructor(io: InputStream, yaml: Yaml = defaultYaml) {
-        rootMap = yaml.load(io)
-    }
-
-    constructor(str: String, yaml: Yaml = defaultYaml) {
-        rootMap = yaml.load(str)
+    init {
+        rootMap = yaml.load(FileReader(path.absolutePathString()))
     }
 
     operator fun <T> get(keyString: String): T? {
@@ -41,8 +39,8 @@ class Taml {
 
         var obj: Map<Any?, Any?> = rootMap
         val iter = keys.iterator()
-        while (true) {
-            if (!iter.hasNext()) break
+        while (iter.hasNext()) {
+
             var key: Any? = iter.next()
 
             if (obj[key] == null) {
@@ -71,6 +69,30 @@ class Taml {
 
     operator fun <T> get(keyString: String, default: T): T {
         return get(keyString) ?: default
+    }
+
+    operator fun <T> set(keyString: String, value: T): Boolean {
+        val keys = keyString.split(".")
+
+        var obj: MutableMap<Any?, Any?> = rootMap
+        val iter = keys.iterator()
+
+        while (iter.hasNext()) {
+            val key = iter.next()
+            if (iter.hasNext()) {
+                obj = obj[key] as? MutableMap<Any?, Any?> ?: let {
+                    return false
+                }
+            } else {
+                obj[key] = value
+                return true
+            }
+        }
+        return false
+    }
+
+    fun save() {
+        yaml.dump(rootMap, FileWriter(path.absolutePathString()))
     }
 
 }

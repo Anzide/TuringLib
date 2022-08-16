@@ -1,11 +1,8 @@
 package net.geekmc.turinglib
 
 import net.geekmc.turinglib.color.ColorUtil
-import net.geekmc.turinglib.taml.Taml
-import net.geekmc.turinglib.taml.loadAsTaml
 import net.geekmc.turinglib.util.saveResource
 import net.minestom.server.extensions.Extension
-import org.yaml.snakeyaml.Yaml
 
 class TuringLib : Extension() {
 
@@ -27,7 +24,7 @@ class TuringLib : Extension() {
 //        println(importantStr)
 //        println(customColors)
 
-        ColorUtil.enable()
+        ColorUtil.init()
         logger.info("TuringLib initialized.")
     }
 
