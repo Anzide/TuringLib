@@ -9,11 +9,7 @@ import kotlin.io.path.absolutePathString
 
 // TODO appendList()方法，方便地往列表里添加东西！
 
-/**
- * 两种方式创建Taml对象：
- * Yaml.loadAsTaml，会使用提供的Yaml的格式来创建
- * Taml()，会使用默认的格式来创建
- */
+//TODO path可能指向的路径没有文件
 class Taml(val path: Path, val yaml: Yaml = defaultYaml) {
 
     companion object {
@@ -28,11 +24,7 @@ class Taml(val path: Path, val yaml: Yaml = defaultYaml) {
         }
     }
 
-    private val rootMap: MutableMap<Any?, Any?>
-
-    init {
-        rootMap = yaml.load(FileReader(path.absolutePathString()))
-    }
+    private val rootMap: MutableMap<Any?, Any?> = yaml.load(FileReader(path.absolutePathString())) ?: LinkedHashMap()
 
     operator fun <T> get(keyString: String): T? {
         val keys = keyString.split(".")

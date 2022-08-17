@@ -15,6 +15,7 @@ fun Extension.saveResource(resource: String) {
     savePackagedResource(resource)
 }
 
+//问题：此处可能给个无文件
 fun Extension.resolvePath(path: String): Path {
     return dataDirectory.resolve(path)
 }
