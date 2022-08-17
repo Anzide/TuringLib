@@ -1,13 +1,12 @@
 package net.geekmc.turinglib.color
 
-import net.geekmc.turing.Turing
 import net.geekmc.turinglib.TuringLib
 import net.geekmc.turinglib.taml.Taml
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
-import net.geekmc.turinglib.util.GlobalEvent
 import net.geekmc.turinglib.util.resolvePath
-import kotlin.io.path.Path
+import net.minestom.server.entity.PlayerSkin
+import org.yaml.snakeyaml.Yaml
 
 fun String.toComponent(): Component {
     return ColorUtil.castStringToComponent(this)
@@ -21,6 +20,8 @@ object ColorUtil {
     // &a -> <#111111> for example
     val colorMap = mutableMapOf<String, String>()
 
+    data class Demo(var x:Int=0,var y:Int=0)
+
     fun init() {
 
         val taml = Taml(TuringLib.INSTANCE.resolvePath("CustomColors.yml"))
@@ -30,8 +31,13 @@ object ColorUtil {
             colorMap[split[0]] = "<${split[1]}>"
         }
 
-        taml["test"]=123
+        val skin = PlayerSkin.fromUsername("Anzide")
+//        taml["sk"] = skin
+//        taml["t"] = Test(1, 2)
+//        taml["d"] = Demo("ab","cd")
+
         taml.save()
+        println(Yaml().dump(Test(1, 2)))
 
     }
 

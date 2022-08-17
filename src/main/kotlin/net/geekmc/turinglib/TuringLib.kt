@@ -16,14 +16,6 @@ class TuringLib : Extension() {
 
         saveResource("CustomColors.yml")
 
-//        val yaml = Yaml()
-//        val taml = yaml.loadAsTaml(getResource("CustomColors.yml")!!)
-//        val importantStr: String = taml["2.3"]!!
-//        val customColors: List<String> = taml["colors", listOf()]
-//
-//        println(importantStr)
-//        println(customColors)
-
         ColorUtil.init()
         logger.info("TuringLib initialized.")
     }

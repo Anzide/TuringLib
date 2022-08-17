@@ -72,11 +72,18 @@ class Taml(val path: Path, val yaml: Yaml = defaultYaml) {
         while (iter.hasNext()) {
             val key = iter.next()
             if (iter.hasNext()) {
+                @Suppress("UNCHECKED_CAST")
                 obj = obj[key] as? MutableMap<Any?, Any?> ?: let {
                     return false
                 }
             } else {
+                println("==========================")
+                println(rootMap)
+                println("--------------------------")
                 obj[key] = value
+                println(rootMap)
+                println("==========================")
+
                 return true
             }
         }
