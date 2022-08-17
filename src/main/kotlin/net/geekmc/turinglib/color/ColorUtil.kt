@@ -20,7 +20,7 @@ object ColorUtil {
     // &a -> <#111111> for example
     val colorMap = mutableMapOf<String, String>()
 
-    data class Demo(var x:Int=0,var y:Int=0)
+    data class Test(var x:Int=0,var y:Int=0)
 
     fun init() {
 
@@ -31,13 +31,14 @@ object ColorUtil {
             colorMap[split[0]] = "<${split[1]}>"
         }
 
-        val skin = PlayerSkin.fromUsername("Anzide")
-//        taml["sk"] = skin
-//        taml["t"] = Test(1, 2)
-//        taml["d"] = Demo("ab","cd")
+//        val skin = PlayerSkin.fromUsername("Anzide")
+//        taml["a"] = skin
+//        taml["b"] = Test(1, 2)
+//        taml["c"] = Player(1, 2)
 
-        taml.save()
-        println(Yaml().dump(Test(1, 2)))
+
+//        taml.save()
+//        println(Yaml().dump(Test(1, 2)))
 
     }
 
