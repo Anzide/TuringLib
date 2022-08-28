@@ -7,9 +7,9 @@ import java.io.FileWriter
 import java.nio.file.Path
 import kotlin.io.path.absolutePathString
 
-// TODO appendList()方法，方便地往列表里添加东西！
-
-//TODO path可能指向的路径没有文件
+/**
+ * Construct a Taml object from the yml file found with the path parameter.Use the Yaml parameter to load it.
+ */
 class Taml(val path: Path, val yaml: Yaml = defaultYaml) {
 
     companion object {
@@ -26,6 +26,14 @@ class Taml(val path: Path, val yaml: Yaml = defaultYaml) {
 
     private val rootMap: MutableMap<Any?, Any?> = yaml.load(FileReader(path.absolutePathString())) ?: LinkedHashMap()
 
+    /**
+     * Get a value from taml.
+     * Example:if the yml file is like:
+     * a:
+     *   b: 1
+     *   c: 2
+     * Then Taml#get("a.b") or taml["a.b"] will return 1.
+     */
     operator fun <T> get(keyString: String): T? {
         val keys = keyString.split(".")
 
@@ -59,6 +67,9 @@ class Taml(val path: Path, val yaml: Yaml = defaultYaml) {
         return null
     }
 
+    /**
+     * Get a value from taml.Return the default value instead of null when value not found or can't convert the value to generic type T.
+     */
     operator fun <T> get(keyString: String, default: T): T {
         return get(keyString) ?: default
     }
@@ -77,12 +88,7 @@ class Taml(val path: Path, val yaml: Yaml = defaultYaml) {
                     return false
                 }
             } else {
-                println("==========================")
-                println(rootMap)
-                println("--------------------------")
                 obj[key] = value
-                println(rootMap)
-                println("==========================")
 
                 return true
             }
@@ -90,6 +96,9 @@ class Taml(val path: Path, val yaml: Yaml = defaultYaml) {
         return false
     }
 
+    /**
+     * Save the taml to the yml file.
+     */
     fun save() {
         yaml.dump(rootMap, FileWriter(path.absolutePathString()))
     }
